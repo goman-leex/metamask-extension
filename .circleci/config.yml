@@ -1755,7 +1755,6 @@ jobs:
 
   test-integration-main:
     executor: node-browsers-medium-plus
-    parallelism: 8
     steps:
       - run: *shallow-git-clone
       - attach_workspace:
