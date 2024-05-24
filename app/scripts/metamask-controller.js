@@ -323,6 +323,7 @@ import createEvmMethodsToNonEvmAccountReqFilterMiddleware from './lib/createEvmM
 import { isEthAddress } from './lib/multichain/address';
 import BridgeController from './controllers/bridge';
 import MetaMetricsDataDeletionController from './controllers/metametrics-data-deletion/metametrics-data-deletion';
+import { DataDeletionService } from './controllers/metametrics-data-deletion/services/services';
 
 export const METAMASK_CONTROLLER_EVENTS = {
   // Fired after state changes that impact the extension badge (unapproved msg count)
@@ -734,12 +735,14 @@ export default class MetamaskController extends EventEmitter {
       this.metaMetricsController.handleMetaMaskStateUpdate(update);
     });
 
+    const dataDeletionService = new DataDeletionService();
     const metaMetricsDataDeletionMessenger =
       this.controllerMessenger.getRestricted({
         name: 'MetaMetricsDataDeletionController',
       });
     this.metaMetricsDataDeletionController =
       new MetaMetricsDataDeletionController({
+        dataDeletionService,
         messenger: metaMetricsDataDeletionMessenger,
         state: initState.metaMetricsDataDeletionController,
         metaMetricsStore: this.metaMetricsController.store,
