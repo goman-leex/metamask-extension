@@ -323,7 +323,7 @@ import createEvmMethodsToNonEvmAccountReqFilterMiddleware from './lib/createEvmM
 import { isEthAddress } from './lib/multichain/address';
 import BridgeController from './controllers/bridge';
 import MetaMetricsDataDeletionController from './controllers/metametrics-data-deletion/metametrics-data-deletion';
-import { DataDeletionService } from './controllers/metametrics-data-deletion/services/services';
+import { DataDeletionService } from './services/data-deletion-service';
 
 export const METAMASK_CONTROLLER_EVENTS = {
   // Fired after state changes that impact the extension badge (unapproved msg count)
