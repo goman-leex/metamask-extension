@@ -3770,6 +3770,10 @@ export default class MetamaskController extends EventEmitter {
         this.metaMetricsDataDeletionController.updateDataDeletionTaskStatus.bind(
           this.metaMetricsDataDeletionController,
         ),
+      setHasMetaMetricsDataRecorded:
+        this.metaMetricsDataDeletionController.setHasMetaMetricsDataRecorded.bind(
+          this.metaMetricsDataDeletionController,
+        ),
     };
   }
 
