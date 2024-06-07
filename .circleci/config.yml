@@ -258,14 +258,14 @@ workflows:
       - test-unit-jest-development:
           requires:
             - prep-deps
-      - test-integration-main:
+      - test-integration:
           requires:
             - prep-deps
       - upload-coverage:
           requires:
             - test-unit-jest-main
             - test-unit-jest-development
-            - test-integration-main
+            - test-integration
       - test-unit-global:
           requires:
             - prep-deps
@@ -312,7 +312,7 @@ workflows:
             - test-unit-jest-main
             - test-unit-jest-development
             - test-unit-global
-            - test-integration-main
+            - test-integration
             - upload-coverage
             - validate-source-maps
             - validate-source-maps-beta
@@ -1753,7 +1753,7 @@ jobs:
       - store_test_results:
           path: test/test-results/junit.xml
 
-  test-integration-main:
+  test-integration:
     executor: node-browsers-medium-plus
     steps:
       - run: *shallow-git-clone
