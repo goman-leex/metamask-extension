@@ -317,8 +317,6 @@ import { createTxVerificationMiddleware } from './lib/tx-verification/tx-verific
 import { updateSecurityAlertResponse } from './lib/ppom/ppom-util';
 import createEvmMethodsToNonEvmAccountReqFilterMiddleware from './lib/createEvmMethodsToNonEvmAccountReqFilterMiddleware';
 import { isEthAddress } from './lib/multichain/address';
-import MetaMetricsDataDeletionController from './controllers/metametrics-data-deletion/metametrics-data-deletion';
-import { DataDeletionService } from './services/data-deletion-service';
 
 export const METAMASK_CONTROLLER_EVENTS = {
   // Fired after state changes that impact the extension badge (unapproved msg count)
