@@ -3,6 +3,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { fireEvent, waitFor } from '@testing-library/react';
 import { EthAccountType, EthMethod } from '@metamask/keyring-api';
+import nock from 'nock';
 import {
   CHAIN_IDS,
   GOERLI_DISPLAY_NAME,
@@ -15,6 +16,8 @@ import { useIsOriginalNativeTokenSymbol } from '../../../hooks/useIsOriginalNati
 import { defaultBuyableChains } from '../../../ducks/ramps/constants';
 import { ETH_EOA_METHODS } from '../../../../shared/constants/eth-methods';
 import { getIntlLocale } from '../../../ducks/locale/locale';
+import { BRIDGE_API_BASE_URL } from '../../../../shared/constants/bridge';
+import { setBackgroundConnection } from '../../../store/background-connection';
 import EthOverview from './eth-overview';
 
 jest.mock('../../../hooks/useIsOriginalNativeTokenSymbol', () => {
@@ -148,6 +151,7 @@ describe('EthOverview', () => {
         },
       });
       openTabSpy = jest.spyOn(global.platform, 'openTab');
+      setBackgroundConnection({ setBridgeFeatureFlags: jest.fn() });
     });
 
     beforeEach(() => {
