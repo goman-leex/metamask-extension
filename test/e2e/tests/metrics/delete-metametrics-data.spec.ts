@@ -50,7 +50,7 @@ const mockSegment = async (mockServer: Mockttp) => {
       }),
     await mockServer
       .forPost(
-        'https://proxy.dev-api.cx.metamask.io/segment/v1/regulations/sources/wygFTooEUUtcckty9kaMc',
+        'https://proxy.api.cx.metamask.io/segment/v1/regulations/sources/wygFTooEUUtcckty9kaMc',
       )
       .withJsonBodyIncluding({
         batch: [
@@ -67,7 +67,7 @@ const mockSegment = async (mockServer: Mockttp) => {
       })),
     await mockServer
       .forGet(
-        'https://proxy.dev-api.cx.metamask.io/segment/v1/regulations/fake-delete-regulation-id',
+        'https://proxy.api.cx.metamask.io/segment/v1/regulations/fake-delete-regulation-id',
       )
       .thenCallback(() => ({
         statusCode: 200,
@@ -119,6 +119,7 @@ describe('Delete MetaMetrics Data @no-mmi', function (this: Suite) {
         const deleteMetaMetricsDataButton = await driver.findElement(
           rowLocators.deleteMetaMetricsDataButton,
         );
+        // eslint-disable-next-line
         await deleteMetaMetricsDataButton.waitForElementState('disabled');
         assert.equal(
           await deleteMetaMetricsDataButton.isEnabled(),
@@ -180,6 +181,7 @@ describe('Delete MetaMetrics Data @no-mmi', function (this: Suite) {
         const deleteMetaMetricsDataButton = await driver.findElement(
           rowLocators.deleteMetaMetricsDataButton,
         );
+        // eslint-disable-next-line
         await deleteMetaMetricsDataButton.waitForElementState('disabled');
         assert.equal(
           await deleteMetaMetricsDataButton.isEnabled(),
