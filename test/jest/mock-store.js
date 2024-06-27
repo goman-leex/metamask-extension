@@ -670,10 +670,20 @@ export const createSwapsMockStore = () => {
 export const createBridgeMockStore = (
   featureFlagOverrides = {},
   bridgeSliceOverrides = {},
+  swapsSliceOverrides = {},
 ) => {
   const swapsStore = createSwapsMockStore();
   return {
     ...swapsStore,
+    swaps: {
+      ...swapsStore.swaps,
+      //   topAssets: {
+      //     '0x6b3595068778dd592e39a122f4f5a5cf09c90fe2': 'SUSHI',
+      //     '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984': 'UNI',
+      //     '0xdac17f958d2ee523a2206206994597c13d831ec7': 'USDT',
+      //   },
+      ...swapsSliceOverrides,
+    },
     bridge: {
       toChain: null,
       ...bridgeSliceOverrides,
