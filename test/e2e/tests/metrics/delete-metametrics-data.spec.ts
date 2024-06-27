@@ -61,6 +61,7 @@ const mockSegment = async (mockServer: Mockttp) => {
           },
         ],
       })
+      .times(2)
       .thenCallback(() => ({
         statusCode: 200,
         data: { regulateId: 'fake-delete-regulation-id' },
@@ -69,6 +70,7 @@ const mockSegment = async (mockServer: Mockttp) => {
       .forGet(
         'https://proxy.api.cx.metamask.io/segment/v1/regulations/fake-delete-regulation-id',
       )
+      .times(2)
       .thenCallback(() => ({
         statusCode: 200,
         data: {
