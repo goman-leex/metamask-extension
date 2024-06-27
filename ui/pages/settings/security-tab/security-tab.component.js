@@ -102,9 +102,7 @@ export default class SecurityTab extends PureComponent {
     useExternalServices: PropTypes.bool,
     toggleExternalServices: PropTypes.func.isRequired,
     unMarkingMetaMetricsDataDeletion: PropTypes.func.isRequired,
-    ///: BEGIN:ONLY_INCLUDE_IF(blockaid)
     setSecurityAlertsEnabled: PropTypes.func,
-    ///: END:ONLY_INCLUDE_IF
   };
 
   state = {
@@ -1007,7 +1005,6 @@ export default class SecurityTab extends PureComponent {
     );
   }
 
-  ///: BEGIN:ONLY_INCLUDE_IF(blockaid)
   /**
    * toggleSecurityAlert
    *
@@ -1025,7 +1022,6 @@ export default class SecurityTab extends PureComponent {
     });
     setSecurityAlertsEnabled(newValue);
   }
-  ///: END:ONLY_INCLUDE_IF
 
   renderUseExternalServices() {
     const { t } = this.context;
@@ -1140,9 +1136,7 @@ export default class SecurityTab extends PureComponent {
           {this.context.t('security')}
         </span>
         {this.renderSeedWords()}
-        {/* ///: BEGIN:ONLY_INCLUDE_IF(blockaid) */}
         {this.renderSecurityAlertsToggle()}
-        {/* ///: END:ONLY_INCLUDE_IF */}
         <span className="settings-page__security-tab-sub-header__bold">
           {this.context.t('privacy')}
         </span>
