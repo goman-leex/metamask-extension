@@ -50,7 +50,7 @@ const mockSegment = async (mockServer: Mockttp) => {
       }),
     await mockServer
       .forPost(
-        'https://proxy.api.cx.metamask.io/segment/v1/regulations/sources/wygFTooEUUtcckty9kaMc',
+        'https://proxy.dev-api.cx.metamask.io/segment/v1/regulations/sources/wygFTooEUUtcckty9kaMc',
       )
       .withHeaders({ 'Content-Type': 'application/vnd.segment.v1+json' })
       .withBodyIncluding(
@@ -66,7 +66,7 @@ const mockSegment = async (mockServer: Mockttp) => {
       })),
     await mockServer
       .forGet(
-        'https://proxy.api.cx.metamask.io/segment/v1/regulations/fake-delete-regulation-id',
+        'https://proxy.dev-api.cx.metamask.io/segment/v1/regulations/fake-delete-regulation-id',
       )
       .withHeaders({ 'Content-Type': 'application/vnd.segment.v1+json' })
       .thenCallback(() => ({
