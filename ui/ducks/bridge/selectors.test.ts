@@ -5,10 +5,12 @@ import { CHAIN_IDS, FEATURED_RPCS } from '../../../shared/constants/network';
 import { ALLOWED_BRIDGE_CHAIN_IDS } from '../../../shared/constants/bridge';
 import {
   getAllBridgeableNetworks,
+  getFromAmount,
   getFromChain,
   getFromChains,
   getFromToken,
   getIsBridgeTx,
+  getToAmount,
   getToChain,
   getToChains,
   getToToken,
@@ -323,6 +325,35 @@ describe('Bridge selectors', () => {
       const result = getToToken(state);
 
       expect(result).toStrictEqual(null);
+    });
+  });
+
+  describe('getFromAmount', () => {
+    it('returns swaps fromTokenInputValue', () => {
+      const state = createBridgeMockStore(
+        {},
+        {},
+        { fromTokenInputValue: '123' },
+      );
+      const result = getFromAmount(state);
+
+      expect(result).toStrictEqual('123');
+    });
+
+    it('returns empty string', () => {
+      const state = createBridgeMockStore({}, {}, { fromTokenInputValue: '' });
+      const result = getFromAmount(state);
+
+      expect(result).toStrictEqual('');
+    });
+  });
+
+  describe('getToAmount', () => {
+    it('returns hardcoded 0', () => {
+      const state = createBridgeMockStore();
+      const result = getToAmount(state);
+
+      expect(result).toStrictEqual('0');
     });
   });
 });
