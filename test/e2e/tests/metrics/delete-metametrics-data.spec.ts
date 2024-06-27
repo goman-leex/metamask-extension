@@ -43,6 +43,7 @@ const mockSegment = async (mockServer: Mockttp) => {
           { type: 'track', event: 'Delete MetaMetrics Data Request Submitted' },
         ],
       })
+      .times(2)
       .thenCallback(() => {
         return {
           statusCode: 200,
