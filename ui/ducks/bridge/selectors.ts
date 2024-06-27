@@ -87,6 +87,12 @@ export const getToToken = (state: BridgeAppState) => {
   return swapsSlice.getToToken(state);
 };
 
+export const getFromAmount = (state: BridgeAppState) =>
+  swapsSlice.getFromTokenInputValue(state);
+export const getToAmount = () => {
+  return '0';
+};
+
 export const getIsBridgeTx = createSelector(
   getFromChain,
   getToChain,
