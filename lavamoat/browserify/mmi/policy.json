@@ -987,7 +987,6 @@
         "@metamask/assets-controllers>@metamask/base-controller": true,
         "@metamask/assets-controllers>@metamask/controller-utils": true,
         "@metamask/assets-controllers>@metamask/polling-controller": true,
-        "@metamask/assets-controllers>async-mutex": true,
         "@metamask/assets-controllers>multiformats": true,
         "@metamask/contract-metadata": true,
         "@metamask/eth-query": true,
@@ -1038,14 +1037,6 @@
         "@metamask/assets-controllers>@metamask/base-controller": true,
         "@metamask/snaps-utils>fast-json-stable-stringify": true,
         "uuid": true
-      }
-    },
-    "@metamask/assets-controllers>async-mutex": {
-      "globals": {
-        "setTimeout": true
-      },
-      "packages": {
-        "@trezor/connect-web>tslib": true
       }
     },
     "@metamask/assets-controllers>multiformats": {
