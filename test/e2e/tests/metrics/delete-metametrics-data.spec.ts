@@ -122,8 +122,10 @@ describe('Delete MetaMetrics Data @no-mmi', function (this: Suite) {
         const deleteMetaMetricsDataButton = await driver.findElement(
           rowLocators.deleteMetaMetricsDataButton,
         );
-        // eslint-disable-next-line
-        await deleteMetaMetricsDataButton.waitForElementState('disabled');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (deleteMetaMetricsDataButton as any).waitForElementState(
+          'disabled',
+        );
         assert.equal(
           await deleteMetaMetricsDataButton.isEnabled(),
           false,
@@ -184,8 +186,10 @@ describe('Delete MetaMetrics Data @no-mmi', function (this: Suite) {
         const deleteMetaMetricsDataButton = await driver.findElement(
           rowLocators.deleteMetaMetricsDataButton,
         );
-        // eslint-disable-next-line
-        await deleteMetaMetricsDataButton.waitForElementState('disabled');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (deleteMetaMetricsDataButton as any).waitForElementState(
+          'disabled',
+        );
         assert.equal(
           await deleteMetaMetricsDataButton.isEnabled(),
           false,
