@@ -12,10 +12,11 @@ import {
 import getFetchWithTimeout from '../../../shared/modules/fetch-with-timeout';
 
 const DEFAULT_ANALYTICS_DATA_DELETION_SOURCE_ID =
-  process.env.ANALYTICS_DATA_DELETION_SOURCE_ID ?? 'test';
-const DEFAULT_ANALYTICS_DATA_DELETION_ENDPOINT =
-  process.env.ANALYTICS_DATA_DELETION_ENDPOINT ??
-  'https://metametrics.metamask.test';
+  'https://proxy.dev-api.cx.metamask.io/segment/v1';
+// process.env.ANALYTICS_DATA_DELETION_SOURCE_ID ?? 'test';
+const DEFAULT_ANALYTICS_DATA_DELETION_ENDPOINT = 'wygFTooEUUtcckty9kaMc';
+// process.env.ANALYTICS_DATA_DELETION_ENDPOINT ??
+// 'https://metametrics.metamask.test';
 
 /**
  * @type RegulationId
