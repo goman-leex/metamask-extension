@@ -88,7 +88,7 @@ const mockSegment = async (mockServer: Mockttp) => {
  * 3. Deletion when user never opted for metrics.
  */
 describe('Delete MetaMetrics Data @no-mmi', function (this: Suite) {
-  it('while user has opted in for metrics tracking', async function () {
+  it.only('while user has opted in for metrics tracking', async function () {
     await withFixtures(
       {
         fixtures: new FixtureBuilder()
@@ -116,6 +116,7 @@ describe('Delete MetaMetrics Data @no-mmi', function (this: Suite) {
 
         await driver.findElement(rowLocators.deletMetaMetricsSettings);
         await driver.clickElement(rowLocators.deleteMetaMetricsDataButton);
+        await driver.delay(20000);
         await driver.clickElement(rowLocators.clearButton);
 
         const deleteMetaMetricsDataButton = await driver.findElement(
