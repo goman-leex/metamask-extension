@@ -1,8 +1,6 @@
 import { useEffect, useCallback, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fetchBridgeFeatureFlags } from '../../pages/bridge/bridge.util';
-import { setBridgeFeatureFlags } from '../../store/actions';
 import {
   getCurrentChainId,
   ///: BEGIN:ONLY_INCLUDE_IF(build-main,build-beta,build-flask)
@@ -30,6 +28,7 @@ import { isHardwareKeyring } from '../../helpers/utils/hardware';
 import { getPortfolioUrl } from '../../helpers/utils/portfolio';
 import { setSwapsFromToken } from '../../ducks/swaps/swaps';
 import { SwapsTokenObject } from '../../../shared/constants/swaps';
+import { setBridgeFeatureFlags } from '../../ducks/bridge/actions';
 ///: END:ONLY_INCLUDE_IF
 
 const useBridging = () => {
@@ -46,9 +45,7 @@ const useBridging = () => {
   const isBridgeChain = useSelector(getIsBridgeChain);
 
   useEffect(() => {
-    fetchBridgeFeatureFlags().then((bridgeFeatureFlags) => {
-      dispatch(setBridgeFeatureFlags(bridgeFeatureFlags));
-    });
+    dispatch(setBridgeFeatureFlags());
   }, [dispatch, setBridgeFeatureFlags]);
 
   const openBridgeExperience = useCallback(
