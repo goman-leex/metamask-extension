@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { ProviderConfig } from '@metamask/network-controller';
 import {
   setFromToken,
   setFromTokenInputValue,
@@ -28,6 +29,7 @@ import {
 import { setActiveNetwork } from '../../../store/actions';
 import { useI18nContext } from '../../../hooks/useI18nContext';
 import { TokenBucketPriority } from '../../../../shared/constants/swaps';
+import { RPCDefinition } from '../../../../shared/constants/network';
 
 const PrepareBridgePage = () => {
   const dispatch = useDispatch();
@@ -99,7 +101,9 @@ const PrepareBridgePage = () => {
             networks={toChains}
             sortOrder={TokenBucketPriority.top}
             onTokenChange={(token) => dispatch(setToToken(token))}
-            onNetworkChange={(networkConfig) => {
+            onNetworkChange={(
+              networkConfig: ProviderConfig | RPCDefinition,
+            ) => {
               dispatch(setToChain(networkConfig));
             }}
             tokens={toTokens ?? {}}

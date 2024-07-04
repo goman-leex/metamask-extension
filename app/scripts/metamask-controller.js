@@ -321,7 +321,10 @@ import { createTxVerificationMiddleware } from './lib/tx-verification/tx-verific
 import { updateSecurityAlertResponse } from './lib/ppom/ppom-util';
 import createEvmMethodsToNonEvmAccountReqFilterMiddleware from './lib/createEvmMethodsToNonEvmAccountReqFilterMiddleware';
 import { isEthAddress } from './lib/multichain/address';
-import BridgeController, { BridgeBackgroundAction } from './controllers/bridge';
+import BridgeController, {
+  BridgeBackgroundAction,
+  BridgeUserAction,
+} from './controllers/bridge';
 
 export const METAMASK_CONTROLLER_EVENTS = {
   // Fired after state changes that impact the extension badge (unapproved msg count)
@@ -3553,6 +3556,10 @@ export default class MetamaskController extends EventEmitter {
       // Bridge
       [BridgeBackgroundAction.SET_FEATURE_FLAGS]:
         bridgeController[BridgeBackgroundAction.SET_FEATURE_FLAGS].bind(
+          bridgeController,
+        ),
+      [BridgeUserAction.SELECT_DEST_NETWORK]:
+        bridgeController[BridgeUserAction.SELECT_DEST_NETWORK].bind(
           bridgeController,
         ),
 
