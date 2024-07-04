@@ -5,6 +5,7 @@ import {
   fetchDestTokens,
 } from '../../../ui/pages/bridge/bridge.util';
 import { SwapsTokenObject } from '../../../shared/constants/swaps';
+import { fetchTopAssets } from '../../../ui/pages/swaps/swaps.util';
 
 // Maps to BridgeController function names
 export enum BridgeUserAction {
@@ -30,6 +31,7 @@ export type BridgeFeatureFlags = {
 export type BridgeControllerState = {
   bridgeFeatureFlags: BridgeFeatureFlags;
   destTokens: Record<string, SwapsTokenObject>;
+  destTopAssets: { address: string }[];
 };
 
 const initialState: BridgeControllerState = {
@@ -39,6 +41,7 @@ const initialState: BridgeControllerState = {
     [BridgeFeatureFlagsKey.NETWORK_DEST_ALLOWLIST]: [],
   },
   destTokens: {},
+  destTopAssets: [],
 };
 
 export default class BridgeController {
@@ -63,7 +66,16 @@ export default class BridgeController {
   };
 
   selectDestNetwork = async (chainId: Hex) => {
+    await this.#setDestTopAssets(chainId);
     await this.#setDestTokens(chainId);
+  };
+
+  #setDestTopAssets = async (chainId: Hex) => {
+    const { bridgeState } = this.store.getState();
+    const destTopAssets = await fetchTopAssets(chainId);
+    this.store.updateState({
+      bridgeState: { ...bridgeState, destTopAssets },
+    });
   };
 
   #setDestTokens = async (chainId: Hex) => {

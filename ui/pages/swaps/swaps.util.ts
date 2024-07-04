@@ -200,8 +200,10 @@ export async function fetchAggregatorMetadata(chainId: any): Promise<object> {
 }
 
 // TODO: Replace `any` with type
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function fetchTopAssets(chainId: any): Promise<object> {
+export async function fetchTopAssets(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  chainId: any,
+): Promise<{ address: string }[]> {
   const topAssetsUrl = getBaseApi('topAssets', chainId);
   const response =
     (await fetchWithCache({
@@ -210,14 +212,24 @@ export async function fetchTopAssets(chainId: any): Promise<object> {
       fetchOptions: { method: 'GET', headers: clientIdHeader },
       cacheOptions: { cacheRefreshTime: CACHE_REFRESH_FIVE_MINUTES },
     })) || [];
+  const topAssetsList = response.filter((asset: { address: string }) =>
+    validateData(TOP_ASSET_VALIDATORS, asset, topAssetsUrl),
+  );
+  return topAssetsList;
+}
+
+export type TopAssets = Record<string, { index: string }>;
+// TODO: Replace `any` with type
+export async function fetchAndTransformTopAssets(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  chainId: any,
+): Promise<TopAssets> {
+  const response = await fetchTopAssets(chainId);
   const topAssetsMap = response.reduce(
     // TODO: Replace `any` with type
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (_topAssetsMap: any, asset: { address: string }, index: number) => {
-      if (validateData(TOP_ASSET_VALIDATORS, asset, topAssetsUrl)) {
-        return { ..._topAssetsMap, [asset.address]: { index: String(index) } };
-      }
-      return _topAssetsMap;
+      return { ..._topAssetsMap, [asset.address]: { index: String(index) } };
     },
     {},
   );

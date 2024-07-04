@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchTokens,
-  fetchTopAssets,
+  fetchAndTransformTopAssets,
   fetchAggregatorMetadata,
 } from '../pages/swaps/swaps.util';
 import {
@@ -41,7 +41,7 @@ export default function useUpdateSwapsState() {
       })
       .catch((error) => console.error(error));
 
-    fetchTopAssets(chainId).then((topAssets) => {
+    fetchAndTransformTopAssets(chainId).then((topAssets) => {
       dispatch(setTopAssets(topAssets));
     });
 

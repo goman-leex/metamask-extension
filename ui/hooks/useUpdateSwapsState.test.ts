@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { waitFor } from '@testing-library/react';
 import {
   fetchTokens,
-  fetchTopAssets,
+  fetchAndTransformTopAssets,
   fetchAggregatorMetadata,
 } from '../pages/swaps/swaps.util';
 import {
@@ -82,7 +82,10 @@ describe('useUpdateSwapsState', () => {
 
   it('1559: should fetch tokens, top assets, and aggregator metadata on mount and dispatch respective actions, then refetch when they change', async () => {
     (fetchTokens as jest.Mock).mockResolvedValueOnce(['token1', 'token2']);
-    (fetchTopAssets as jest.Mock).mockResolvedValueOnce(['asset1', 'asset2']);
+    (fetchAndTransformTopAssets as jest.Mock).mockResolvedValueOnce([
+      'asset1',
+      'asset2',
+    ]);
     (fetchAggregatorMetadata as jest.Mock).mockResolvedValueOnce({
       metadata: 'someMetadata',
     });
@@ -90,7 +93,9 @@ describe('useUpdateSwapsState', () => {
     await renderHook(() => useUpdateSwapsState());
 
     expect(fetchTokens).toHaveBeenCalledWith(mockState.getCurrentChainId);
-    expect(fetchTopAssets).toHaveBeenCalledWith(mockState.getCurrentChainId);
+    expect(fetchAndTransformTopAssets).toHaveBeenCalledWith(
+      mockState.getCurrentChainId,
+    );
     expect(fetchAggregatorMetadata).toHaveBeenCalledWith(
       mockState.getCurrentChainId,
     );
@@ -118,7 +123,10 @@ describe('useUpdateSwapsState', () => {
 
   it('not-1559: should fetch tokens, top assets, non-1559 gas price info, and aggregator metadata on mount and dispatch respective actions, then refetch when they change', async () => {
     (fetchTokens as jest.Mock).mockResolvedValueOnce(['token1', 'token2']);
-    (fetchTopAssets as jest.Mock).mockResolvedValueOnce(['asset1', 'asset2']);
+    (fetchAndTransformTopAssets as jest.Mock).mockResolvedValueOnce([
+      'asset1',
+      'asset2',
+    ]);
     (fetchAggregatorMetadata as jest.Mock).mockResolvedValueOnce({
       metadata: 'someMetadata',
     });
@@ -128,7 +136,9 @@ describe('useUpdateSwapsState', () => {
     await renderHook(() => useUpdateSwapsState());
 
     expect(fetchTokens).toHaveBeenCalledWith(mockState.getCurrentChainId);
-    expect(fetchTopAssets).toHaveBeenCalledWith(mockState.getCurrentChainId);
+    expect(fetchAndTransformTopAssets).toHaveBeenCalledWith(
+      mockState.getCurrentChainId,
+    );
     expect(fetchAggregatorMetadata).toHaveBeenCalledWith(
       mockState.getCurrentChainId,
     );
@@ -156,7 +166,7 @@ describe('useUpdateSwapsState', () => {
     renderHook(() => useUpdateSwapsState());
 
     expect(fetchTokens).not.toHaveBeenCalled();
-    expect(fetchTopAssets).not.toHaveBeenCalled();
+    expect(fetchAndTransformTopAssets).not.toHaveBeenCalled();
     expect(fetchAggregatorMetadata).not.toHaveBeenCalled();
     expect(mockDispatch).not.toHaveBeenCalled();
   });

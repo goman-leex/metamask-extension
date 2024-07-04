@@ -27,7 +27,7 @@ import {
 import {
   fetchTokens,
   fetchAggregatorMetadata,
-  fetchTopAssets,
+  fetchAndTransformTopAssets,
   isContractAddressValid,
   getNetworkNameByChainId,
   getSwapsLivenessForNetwork,
@@ -111,12 +111,12 @@ describe('Swaps Util', () => {
       },
     };
     it('should fetch top assets', async () => {
-      const result = await fetchTopAssets(CHAIN_IDS.MAINNET);
+      const result = await fetchAndTransformTopAssets(CHAIN_IDS.MAINNET);
       expect(result).toStrictEqual(expectedResult);
     });
 
     it('should fetch top assets on prod', async () => {
-      const result = await fetchTopAssets(CHAIN_IDS.MAINNET);
+      const result = await fetchAndTransformTopAssets(CHAIN_IDS.MAINNET);
       expect(result).toStrictEqual(expectedResult);
     });
   });

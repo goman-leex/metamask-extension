@@ -19,6 +19,7 @@ import {
   getToChains,
   getToToken,
   getToTokens,
+  getToTopAssets,
 } from '../../../ducks/bridge/selectors';
 import { MultiChainTokenPicker } from '../components/multichain-token-picker';
 import { Box, Text, TextField } from '../../../components/component-library';
@@ -42,6 +43,7 @@ const PrepareBridgePage = () => {
 
   const toToken = useSelector(getToToken);
   const toTokens = useSelector(getToTokens);
+  const toTopAssets = useSelector(getToTopAssets);
 
   const fromChains = useSelector(getFromChains);
   const toChains = useSelector(getToChains);
@@ -107,6 +109,7 @@ const PrepareBridgePage = () => {
               dispatch(setToChain(networkConfig));
             }}
             tokens={toTokens ?? {}}
+            topAssets={toTopAssets ?? []}
           />
           <TextField value={toAmount} readOnly />
         </Box>
