@@ -7,7 +7,13 @@ import {
   IconColor,
   TextColor,
 } from '../../../../../helpers/constants/design-system';
-import { Box, ButtonIcon, IconName, Text } from '../../../../component-library';
+import {
+  Box,
+  ButtonIcon,
+  ButtonIconSize,
+  IconName,
+  Text,
+} from '../../../../component-library';
 import Tooltip from '../../../../ui/tooltip';
 
 const InfoText = ({ text }: { text: string }) => (
@@ -57,9 +63,12 @@ export const ConfirmInfoRowText: React.FC<ConfirmInfoRowTextProps> = ({
           className={editIconClassName || undefined}
           color={IconColor.primaryDefault}
           ariaLabel={t('edit')}
-          marginLeft={4}
           iconName={IconName.Edit}
           onClick={onEditClick}
+          size={ButtonIconSize.Sm}
+          // to reset the button padding
+          style={{ marginLeft: '-4px' }}
+          data-testid="edit-nonce-icon"
         />
       ) : null}
     </Box>

@@ -2946,9 +2946,6 @@
   "nonceField": {
     "message": "I-customize ang nonce ng transaksyon"
   },
-  "nonceFieldDescription": {
-    "message": "I-on ito para baguhin ang nonce (numero ng transaksyon) sa mga screen ng kumpirmasyon. Ito ay isang advanced na feature, gamitin nang maingat."
-  },
   "nonceFieldHeading": {
     "message": "I-custom ang nonce"
   },

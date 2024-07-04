@@ -5,7 +5,7 @@ import {
 } from '../../../../../../../test/data/confirmations/contract-interaction';
 import mockState from '../../../../../../../test/data/mock-state.json';
 import { renderHookWithProvider } from '../../../../../../../test/lib/render-helpers';
-import { useKnownMethodDataInTransaction } from './known-method-data-in-transaction';
+import { useKnownMethodDataInTransaction } from './useKnownMethodDataInTransaction';
 
 describe('useKnownMethodDataInTransaction', () => {
   const depositHexData = '0xd0e30db0';

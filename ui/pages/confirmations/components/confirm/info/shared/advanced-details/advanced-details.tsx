@@ -27,7 +27,7 @@ import {
   showModal,
   updateCustomNonce,
 } from '../../../../../../../store/actions';
-import { useKnownMethodDataInTransaction } from '../../hooks/known-method-data-in-transaction';
+import { useKnownMethodDataInTransaction } from '../../hooks/useKnownMethodDataInTransaction';
 import { ConfirmInfoSection } from '../../../../../../../components/app/confirm/info/row/section';
 
 const getMethodDataString = (rawMethodData: {

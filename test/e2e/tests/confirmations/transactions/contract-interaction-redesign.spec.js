@@ -203,8 +203,6 @@ describe('Confirmation Redesign Contract Interaction Component', function () {
 
           await openDapp(driver, contractAddress);
 
-          await toggleOnCustomNonce(driver);
-
           await createContractDeploymentTransaction(driver);
           await confirmContractDeploymentTransaction(driver);
 
@@ -253,6 +251,80 @@ describe('Confirmation Redesign Contract Interaction Component', function () {
           await toggleAdvancedDetails(driver);
 
           await assertAdvancedGasDetailsWithL2Breakdown(driver);
+        },
+      );
+    });
+
+    it('If nonce editing is enabled, advanced details are shown', async function () {
+      await withFixtures(
+        {
+          dapp: true,
+          fixtures: new FixtureBuilder()
+            .withPermissionControllerConnectedToTestDapp()
+            .withPreferencesController({
+              preferences: { redesignedConfirmationsEnabled: true },
+            })
+            .build(),
+          ganacheOptions: defaultGanacheOptionsForType2Transactions,
+          smartContract,
+          title: this.test?.fullTitle(),
+        },
+        async ({ driver, contractRegistry }) => {
+          const contractAddress = await contractRegistry.getContractAddress(
+            smartContract,
+          );
+          await unlockWallet(driver);
+
+          await openDapp(driver, contractAddress);
+
+          await toggleOnCustomNonce(driver);
+
+          await createContractDeploymentTransaction(driver);
+          await confirmContractDeploymentTransaction(driver);
+
+          await createDepositTransaction(driver);
+
+          await driver.waitUntilXWindowHandles(3);
+          await driver.switchToWindowWithTitle(WINDOW_TITLES.Dialog);
+
+          await assertAdvancedGasDetails(driver);
+        },
+      );
+    });
+
+    it('If hex data is enabled, advanced details are shown', async function () {
+      await withFixtures(
+        {
+          dapp: true,
+          fixtures: new FixtureBuilder()
+            .withPermissionControllerConnectedToTestDapp()
+            .withPreferencesController({
+              preferences: { redesignedConfirmationsEnabled: true },
+            })
+            .build(),
+          ganacheOptions: defaultGanacheOptionsForType2Transactions,
+          smartContract,
+          title: this.test?.fullTitle(),
+        },
+        async ({ driver, contractRegistry }) => {
+          const contractAddress = await contractRegistry.getContractAddress(
+            smartContract,
+          );
+          await unlockWallet(driver);
+
+          await openDapp(driver, contractAddress);
+
+          await toggleOnHexData(driver);
+
+          await createContractDeploymentTransaction(driver);
+          await confirmContractDeploymentTransaction(driver);
+
+          await createDepositTransaction(driver);
+
+          await driver.waitUntilXWindowHandles(3);
+          await driver.switchToWindowWithTitle(WINDOW_TITLES.Dialog);
+
+          await assertAdvancedGasDetails(driver);
         },
       );
     });
@@ -321,7 +393,6 @@ async function confirmDepositTransactionWithCustomNonce(driver, customNonce) {
   });
 
   await driver.switchToWindowWithTitle(WINDOW_TITLES.Dialog);
-  await toggleAdvancedDetails(driver);
 
   await driver.waitForSelector({
     css: 'p',
@@ -375,6 +446,36 @@ async function toggleOnCustomNonce(driver) {
 
   // Toggle on custom toggle setting (off by default)
   await driver.clickElement('.custom-nonce-toggle');
+
+  // Close settings
+  await driver.clickElement(
+    '.settings-page__header__title-container__close-button',
+  );
+}
+
+async function toggleOnHexData(driver) {
+  // switch to metamask page and open the three dots menu
+  await driver.switchToWindowWithTitle(WINDOW_TITLES.ExtensionInFullScreenView);
+
+  // Open settings menu button
+  const accountOptionsMenuSelector =
+    '[data-testid="account-options-menu-button"]';
+  await driver.clickElement(accountOptionsMenuSelector);
+
+  // Click settings from dropdown menu
+  const globalMenuSettingsSelector = '[data-testid="global-menu-settings"]';
+  await driver.waitForSelector(globalMenuSettingsSelector);
+  await driver.clickElement(globalMenuSettingsSelector);
+
+  // Click Advanced tab
+  const advancedTabRawLocator = {
+    text: 'Advanced',
+    tag: 'div',
+  };
+  await driver.clickElement(advancedTabRawLocator);
+
+  // Toggle on custom toggle setting (off by default)
+  await driver.clickElement('.hex-data-toggle');
 
   // Close settings
   await driver.clickElement(

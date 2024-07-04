@@ -12,7 +12,7 @@ import { ConfirmInfoSection } from '../../../../../../../components/app/confirm/
 import { useI18nContext } from '../../../../../../../hooks/useI18nContext';
 import { selectPaymasterAddress } from '../../../../../../../selectors/account-abstraction';
 import { currentConfirmationSelector } from '../../../../../selectors';
-import { useKnownMethodDataInTransaction } from '../../hooks/known-method-data-in-transaction';
+import { useKnownMethodDataInTransaction } from '../../hooks/useKnownMethodDataInTransaction';
 
 const OriginRow = () => {
   const t = useI18nContext();
