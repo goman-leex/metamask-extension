@@ -29,7 +29,10 @@ import {
 } from '../../../helpers/constants/design-system';
 import { setActiveNetwork } from '../../../store/actions';
 import { useI18nContext } from '../../../hooks/useI18nContext';
-import { TokenBucketPriority } from '../../../../shared/constants/swaps';
+import {
+  SWAPS_CHAINID_DEFAULT_TOKEN_MAP,
+  TokenBucketPriority,
+} from '../../../../shared/constants/swaps';
 import { RPCDefinition } from '../../../../shared/constants/network';
 
 const PrepareBridgePage = () => {
@@ -52,6 +55,12 @@ const PrepareBridgePage = () => {
 
   const fromAmount = useSelector(getFromAmount);
   const toAmount = useSelector(getToAmount);
+
+  const isSwapsChain = (
+    chainId: string,
+  ): chainId is keyof typeof SWAPS_CHAINID_DEFAULT_TOKEN_MAP => {
+    return Object.keys(SWAPS_CHAINID_DEFAULT_TOKEN_MAP).includes(chainId);
+  };
 
   return (
     <div className="prepare-bridge-page">

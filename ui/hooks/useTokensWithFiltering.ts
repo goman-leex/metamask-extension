@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { isEqual } from 'lodash';
 import { ChainId } from '@metamask/controller-utils';
@@ -48,6 +48,22 @@ export const useTokensWithFiltering = <T extends SwapsTokenObject>(
   const tokenConversionRates = useSelector(getTokenExchangeRates, isEqual);
   const conversionRate = useSelector(getConversionRate);
   const currentCurrency = useSelector(getCurrentCurrency);
+
+  useEffect(() => {
+    console.log('====useTokens', chainId, selectedAddress, {
+      allDetectedTokens,
+      allDetectedTokensForChainAndAddress,
+      tokensWithBalances,
+      tokenList,
+      topTokens,
+    });
+  }, [
+    allDetectedTokens,
+    allDetectedTokensForChainAndAddress,
+    tokensWithBalances,
+    tokenList,
+    topTokens,
+  ]);
 
   const filteredTokenList = useMemo(() => {
     if (!topTokens || !tokenList) {
