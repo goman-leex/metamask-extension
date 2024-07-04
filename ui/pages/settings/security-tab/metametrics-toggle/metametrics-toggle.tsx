@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useI18nContext } from '../../../../hooks/useI18nContext';
 import { MetaMetricsContext } from '../../../../contexts/metametrics';
 import {
@@ -31,7 +31,6 @@ const MetametricsToggle = ({
   setDataCollectionForMarketing: (value: boolean) => void;
 }) => {
   const t = useI18nContext();
-  const dispatch = useDispatch();
   const trackEvent = useContext(MetaMetricsContext);
   const { enableMetametrics, error: enableMetametricsError } =
     useEnableMetametrics();
@@ -74,7 +73,7 @@ const MetametricsToggle = ({
           participateInMetaMetrics,
         },
       });
-      dispatch(setHasMetaMetricsDataRecorded(true));
+      await setHasMetaMetricsDataRecorded(true);
     }
 
     if (dataCollectionForMarketing) {

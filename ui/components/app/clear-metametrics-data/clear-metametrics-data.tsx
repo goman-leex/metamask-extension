@@ -50,16 +50,16 @@ export default function ClearMetaMetricsData() {
 
   const deleteMetaMetricsData = async () => {
     try {
-      await dispatch(createMetaMetricsDataDeletionTask());
+      await createMetaMetricsDataDeletionTask();
       dispatch(markingMetaMetricsDataDeletion());
       if (participateInMetaMetrics) {
-        dispatch(setHasMetaMetricsDataRecorded(true));
+        await setHasMetaMetricsDataRecorded(true);
         trackEvent({
           category: MetaMetricsEventCategory.Settings,
           event: MetaMetricsEventName.MetricsDataDeletionRequest,
         });
       } else {
-        dispatch(setHasMetaMetricsDataRecorded(false));
+        await setHasMetaMetricsDataRecorded(false);
       }
     } catch (error: unknown) {
       dispatch(openDataDeletionErrorModal());
