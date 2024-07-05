@@ -2124,7 +2124,6 @@ export async function fetchNftCollectionsMetadata(
 ): Promise<{
   collections: Collection[];
 }> {
-  console.log('fetchNftCollectionsMetadata action', contractAddresses, chainId);
   return await submitRequestToBackground('fetchNftCollectionsMetadata', [
     contractAddresses,
     chainId,
