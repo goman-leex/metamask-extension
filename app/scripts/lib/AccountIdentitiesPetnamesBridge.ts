@@ -8,7 +8,7 @@ import { InternalAccount } from '@metamask/keyring-api';
 import {
   AccountsControllerChangeEvent,
   AccountsControllerListAccountsAction,
-} from '@metamask/accounts-controller';
+} from '@mockmask/accounts-controller';
 import {
   PetnameEntry,
   AbstractPetnamesBridge,

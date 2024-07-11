@@ -712,6 +712,7 @@ export enum MetaMetricsEventAccountType {
   Default = 'metamask',
   Hardware = 'hardware',
   Imported = 'imported',
+  Mock = 'mock',
   ///: BEGIN:ONLY_INCLUDE_IF(keyring-snaps)
   Snap = 'snap',
   ///: END:ONLY_INCLUDE_IF

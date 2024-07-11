@@ -1,7 +1,7 @@
 import { EthAccountType, EthMethod } from '@metamask/keyring-api';
 import { KeyringTypes } from '@metamask/keyring-controller';
 import { v4 as uuidv4 } from 'uuid';
-import { keyringTypeToName } from '@metamask/accounts-controller';
+import { keyringTypeToName } from '@mockmask/accounts-controller';
 import {
   draftTransactionInitialState,
   initialState,

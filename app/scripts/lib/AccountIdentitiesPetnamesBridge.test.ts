@@ -6,7 +6,7 @@ import {
   NameOrigin,
 } from '@metamask/name-controller';
 import { cloneDeep } from 'lodash';
-import { AccountsControllerState } from '@metamask/accounts-controller';
+import { AccountsControllerState } from '@mockmask/accounts-controller';
 import { KeyringTypes } from '@metamask/keyring-controller';
 import { createMockInternalAccount } from '../../../test/jest/mocks';
 import {

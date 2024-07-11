@@ -177,6 +177,9 @@
   "addAccount": {
     "message": "添加账户"
   },
+  "addMockAccount": {
+    "message": "添加模拟账户"
+  },
   "addAcquiredTokens": {
     "message": "添加您通过MetaMask获得的代币"
   },
@@ -237,8 +240,14 @@
   "addFromAListOfPopularNetworks": {
     "message": "从热门网络列表中选择网络来添加，或手动添加网络。仅可与您信任的实体互动。"
   },
+  "addNewAccount": {
+    "message": "新建账户"
+  },
   "addHardwareWallet": {
     "message": "添加硬件钱包"
+  },
+  "addMockWallet": {
+    "message": "添加模拟钱包"
   },
   "addIPFSGateway": {
     "message": "添加您首选的IPFS网关"
@@ -283,6 +292,12 @@
   },
   "address": {
     "message": "地址"
+  },
+  "addressDuplicate": {
+    "message": "此账户地址已存在"
+  },
+  "addressInvalidate": {
+    "message": "此账户地址格式不合法"
   },
   "addressCopied": {
     "message": "地址已复制！"

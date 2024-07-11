@@ -1,4 +1,13 @@
-# MetaMask Browser Extension
+# MockMask
+
+Build for development!!
+
+1. nvm use 20
+2. yarn install
+3. yarn start
+4. if you want to develop, please check that it use the @mockmask/accounts-controller to replace the @metamsk/accounts-controller because the @mockmask/accounts-controller includes the [Mock Account] keyring type.
+
+## Metamask Browser Extension
 
 You can find the latest version of MetaMask on [our official website](https://metamask.io/). For help using MetaMask, visit our [User Support Site](https://metamask.zendesk.com/hc/en-us).
 

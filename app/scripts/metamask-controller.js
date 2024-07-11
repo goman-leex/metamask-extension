@@ -24,6 +24,7 @@ import {
   wrap,
   ///: END:ONLY_INCLUDE_IF
 } from 'lodash';
+import MockAccountKeyring from './mock-keyring';
 import { keyringBuilderFactory } from '@metamask/eth-keyring-controller';
 import { KeyringController } from '@metamask/keyring-controller';
 import createFilterMiddleware from '@metamask/eth-json-rpc-filters';
@@ -94,7 +95,7 @@ import {
 } from '@metamask/snaps-rpc-methods';
 ///: END:ONLY_INCLUDE_IF
 
-import { AccountsController } from '@metamask/accounts-controller';
+import { AccountsController } from '@mockmask/accounts-controller';
 
 ///: BEGIN:ONLY_INCLUDE_IF(build-mmi)
 import {
@@ -710,7 +711,7 @@ export default class MetamaskController extends EventEmitter {
       // added this to track previous value of useNftDetection, should be true on very first initializing of controller[]
       disabled:
         this.preferencesController.store.getState().useNftDetection ===
-        undefined
+          undefined
           ? true
           : !this.preferencesController.store.getState().useNftDetection,
       selectedAddress:
@@ -968,7 +969,10 @@ export default class MetamaskController extends EventEmitter {
       initState: initState.OnboardingController,
     });
 
-    let additionalKeyrings = [keyringBuilderFactory(QRHardwareKeyring)];
+    let additionalKeyrings = [
+      keyringBuilderFactory(QRHardwareKeyring),
+      keyringBuilderFactory(MockAccountKeyring)
+    ];
 
     if (isManifestV3 === false) {
       const keyringOverrides = this.opts.overrides?.keyrings;
@@ -976,6 +980,7 @@ export default class MetamaskController extends EventEmitter {
       const additionalKeyringTypes = [
         keyringOverrides?.lattice || LatticeKeyring,
         QRHardwareKeyring,
+        MockAccountKeyring
       ];
 
       const additionalBridgedKeyringTypes = [
@@ -1261,14 +1266,14 @@ export default class MetamaskController extends EventEmitter {
     this.snapExecutionService =
       shouldUseOffscreenExecutionService === false
         ? new IframeExecutionService({
-            ...snapExecutionServiceArgs,
-            iframeUrl: new URL(process.env.IFRAME_EXECUTION_ENVIRONMENT_URL),
-          })
+          ...snapExecutionServiceArgs,
+          iframeUrl: new URL(process.env.IFRAME_EXECUTION_ENVIRONMENT_URL),
+        })
         : new OffscreenExecutionService({
-            // eslint-disable-next-line no-undef
-            documentUrl: chrome.runtime.getURL('./offscreen.html'),
-            ...snapExecutionServiceArgs,
-          });
+          // eslint-disable-next-line no-undef
+          documentUrl: chrome.runtime.getURL('./offscreen.html'),
+          ...snapExecutionServiceArgs,
+        });
 
     const snapControllerMessenger = this.controllerMessenger.getRestricted({
       name: 'SnapController',
@@ -1641,7 +1646,7 @@ export default class MetamaskController extends EventEmitter {
       getPermittedAccounts: this.getPermittedAccounts.bind(this),
       getSavedGasFees: () =>
         this.preferencesController.store.getState().advancedGasFee[
-          this.networkController.state.providerConfig.chainId
+        this.networkController.state.providerConfig.chainId
         ],
       getSelectedAddress: () =>
         this.accountsController.getSelectedAccount().address,
@@ -1651,7 +1656,7 @@ export default class MetamaskController extends EventEmitter {
           Boolean(
             this.preferencesController.store.getState()
               .incomingTransactionsPreferences?.[
-              this.networkController.state.providerConfig.chainId
+            this.networkController.state.providerConfig.chainId
             ] && this.onboardingController.store.getState().completedOnboarding,
           ),
         queryEntireHistory: false,
@@ -3018,6 +3023,7 @@ export default class MetamaskController extends EventEmitter {
 
       // primary keyring management
       addNewAccount: this.addNewAccount.bind(this),
+      addNewMockAccount: this.addNewMockAccount.bind(this),
       getSeedPhrase: this.getSeedPhrase.bind(this),
       resetAccount: this.resetAccount.bind(this),
       removeAccount: this.removeAccount.bind(this),
@@ -4214,6 +4220,8 @@ export default class MetamaskController extends EventEmitter {
         return 'hardware';
       case KeyringType.imported:
         return 'imported';
+      case KeyringType.mock:
+        return 'mock';
       case KeyringType.snap:
         return 'snap';
       default:
@@ -4254,9 +4262,8 @@ export default class MetamaskController extends EventEmitter {
    */
 
   getAccountLabel(name, index, hdPathDescription) {
-    return `${name[0].toUpperCase()}${name.slice(1)} ${
-      parseInt(index, 10) + 1
-    } ${hdPathDescription || ''}`.trim();
+    return `${name[0].toUpperCase()}${name.slice(1)} ${parseInt(index, 10) + 1
+      } ${hdPathDescription || ''}`.trim();
   }
 
   /**
@@ -4332,6 +4339,85 @@ export default class MetamaskController extends EventEmitter {
     }
 
     return addedAccountAddress;
+  }
+
+  /**
+   * Adds a new mock account to the default (first) HD seed phrase Keyring.
+   *
+   * @param accountCount
+   * @returns {} keyState
+   */
+  async addNewMockAccount(accountCount, address, label) {
+    let [primaryKeyring] = this.keyringController.getKeyringsByType(
+      KeyringType.mock,
+    );
+    if (!primaryKeyring) {
+      primaryKeyring = await this.keyringController.addNewKeyring(
+        KeyringType.mock,
+      );
+    }
+    const { keyringController } = this;
+    const {
+      identities: oldIdentities,
+    } = this.preferencesController.store.getState();
+
+    if (Object.keys(oldIdentities).length === accountCount) {
+      const keyState = await primaryKeyring.addAccounts([address]);
+      const newAccounts = await keyringController.getAccounts();
+      await this.keyringController.persistAllKeyrings();
+      this.preferencesController.setAddresses(newAccounts);
+      this.preferencesController.setAccountLabel(address, label);
+      // Select the account
+      this.preferencesController.setSelectedAddress(address);
+      // It is expected that the account also exist in the accounts-controller
+      // in other case, an error shall be thrown
+      const account = this.accountsController.getAccountByAddress(address);
+      this.accountsController.setAccountName(account.id, label);
+      this.accountsController.setSelectedAccount(account.id);
+      const { identities } = this.preferencesController.store.getState();
+      return { ...keyState, identities };
+    }
+
+    return {
+      ...keyringController.memStore.getState(),
+      identities: oldIdentities,
+    };
+
+
+    // const keyring = await this.getKeyringForDevice(deviceName, hdPath);
+
+    // keyring.setAccountToUnlock(index);
+    // const oldAccounts = await this.keyringController.getAccounts();
+    // const keyState = await this.keyringController.addNewAccountForKeyring(
+    //   keyring,
+    // );
+    // const newAccounts = await this.keyringController.getAccounts();
+    // this.preferencesController.setAddresses(newAccounts);
+    // newAccounts.forEach((address) => {
+    //   if (!oldAccounts.includes(address)) {
+    //     const label = this.getAccountLabel(
+    //       deviceName === HardwareDeviceNames.qr
+    //         ? keyring.getName()
+    //         : deviceName,
+    //       index,
+    //       hdPathDescription,
+    //     );
+    //     // Set the account label to Trezor 1 /  Ledger 1 / QR Hardware 1, etc
+    //     this.preferencesController.setAccountLabel(address, label);
+    //     // Select the account
+    //     this.preferencesController.setSelectedAddress(address);
+
+    //     // It is expected that the account also exist in the accounts-controller
+    //     // in other case, an error shall be thrown
+    //     const account = this.accountsController.getAccountByAddress(address);
+    //     this.accountsController.setAccountName(account.id, label);
+    //   }
+    // });
+
+    // const accounts = this.accountsController.listAccounts();
+
+    // const { identities } = this.preferencesController.store.getState();
+    // return { ...keyState, identities, accounts };
   }
 
   /**
@@ -5946,10 +6032,10 @@ export default class MetamaskController extends EventEmitter {
         params:
           newAccounts.length < 2
             ? // If the length is 1 or 0, the accounts are sorted by definition.
-              newAccounts
+            newAccounts
             : // If the length is 2 or greater, we have to execute
-              // `eth_accounts` vi this method.
-              await this.getPermittedAccounts(origin),
+            // `eth_accounts` vi this method.
+            await this.getPermittedAccounts(origin),
       });
     }
 

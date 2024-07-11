@@ -5,7 +5,7 @@ import { GetSubjectMetadata } from '@metamask/permission-controller';
 import {
   AccountsControllerGetAccountByAddressAction,
   AccountsControllerSetSelectedAccountAction,
-} from '@metamask/accounts-controller';
+} from '@mockmask/accounts-controller';
 import type {
   AcceptRequest,
   AddApprovalRequest,

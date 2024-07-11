@@ -9,7 +9,7 @@ import { TransactionUpdateController } from '@metamask-institutional/transaction
 import { SignatureController } from '@metamask/signature-controller';
 
 import { NetworkController } from '@metamask/network-controller';
-import { AccountsController } from '@metamask/accounts-controller';
+import { AccountsController } from '@mockmask/accounts-controller';
 import { EthAccountType, EthMethod } from '@metamask/keyring-api';
 
 import { CustodyController } from '@metamask-institutional/custody-controller';

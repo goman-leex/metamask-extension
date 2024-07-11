@@ -1,6 +1,6 @@
 import { RestrictedControllerMessenger } from '@metamask/base-controller';
 import { KeyringControllerGetKeyringForAccountAction } from '@metamask/keyring-controller';
-import { AccountsControllerGetSelectedAccountAction } from '@metamask/accounts-controller';
+import { AccountsControllerGetSelectedAccountAction } from '@mockmask/accounts-controller';
 import { GetSnap } from '@metamask/snaps-controllers';
 import { Snap } from '@metamask/snaps-utils';
 

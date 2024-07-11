@@ -86,6 +86,7 @@ export enum IconName {
   Global = 'global',
   Graph = 'graph',
   Hardware = 'hardware',
+  Mock = 'mock',
   Heart = 'heart',
   Hierarchy = 'hierarchy',
   Home = 'home',

@@ -20,6 +20,7 @@ import { TextFieldSearch } from '../../component-library/text-field-search/depre
 import {
   AccountListItem,
   CreateAccount,
+  CreateMockAccount,
   ImportAccount,
   AccountListItemMenuTypes,
 } from '..';
@@ -68,6 +69,8 @@ const ACTION_MODES = {
   MENU: 'menu',
   // Displays the add account form controls
   ADD: 'add',
+  // Displays the add mock account form controls
+  MOCK: 'mock',
   // Displays the import account form controls
   IMPORT: 'import',
 };
@@ -141,6 +144,8 @@ export const AccountListMenu = ({
     title = t('addAccount');
   } else if (actionMode === ACTION_MODES.IMPORT) {
     title = t('importAccount');
+  } else if (actionMode === ACTION_MODES.MOCK) {
+    title = t('addMockAccount');
   }
 
   let onBack = null;
@@ -170,6 +175,19 @@ export const AccountListMenu = ({
         {actionMode === ACTION_MODES.ADD ? (
           <Box paddingLeft={4} paddingRight={4} paddingBottom={4}>
             <CreateAccount
+              onActionComplete={(confirmed) => {
+                if (confirmed) {
+                  onClose();
+                } else {
+                  setActionMode(ACTION_MODES.LIST);
+                }
+              }}
+            />
+          </Box>
+        ) : null}
+        {actionMode === ACTION_MODES.MOCK ? (
+          <Box paddingLeft={4} paddingRight={4} paddingBottom={4}>
+            <CreateMockAccount
               onActionComplete={(confirmed) => {
                 if (confirmed) {
                   onClose();
@@ -264,6 +282,17 @@ export const AccountListMenu = ({
                 }}
               >
                 {t('addHardwareWallet')}
+              </ButtonLink>
+            </Box>
+            <Box marginTop={4}>
+              <ButtonLink
+                size={Size.SM}
+                startIconName={IconName.Mock}
+                onClick={() => {
+                  setActionMode(ACTION_MODES.MOCK);
+                }}
+              >
+                {t('addMockWallet')}
               </ButtonLink>
             </Box>
             {

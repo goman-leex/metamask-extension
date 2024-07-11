@@ -186,6 +186,9 @@
   "addAccount": {
     "message": "Add account"
   },
+  "addMockAccount": {
+    "message": "Add Mock account"
+  },
   "addAcquiredTokens": {
     "message": "Add the tokens you've acquired using MetaMask"
   },
@@ -249,6 +252,9 @@
   "addHardwareWallet": {
     "message": "Add hardware wallet"
   },
+  "addMockWallet": {
+    "message": "Add mock wallet"
+  },
   "addIPFSGateway": {
     "message": "Add your preferred IPFS gateway"
   },
@@ -307,6 +313,12 @@
   },
   "address": {
     "message": "Address"
+  },
+  "addressDuplicate": {
+    "message": "This account address already exists"
+  },
+  "addressInvalidate": {
+    "message": "This account address is invalidate"
   },
   "addressCopied": {
     "message": "Address copied!"
@@ -3303,7 +3315,6 @@
   "onboardingMetametricsDescriptionLegacy": {
     "message": "MetaMask would like to gather usage data to better understand how our users interact with MetaMask. This data will be used to provide the service, which includes improving the service based on your use."
   },
-
   "onboardingMetametricsDisagree": {
     "message": "No thanks"
   },
