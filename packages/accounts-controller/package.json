@@ -1,9 +1,9 @@
 {
-  "name": "@metamask/accounts-controller",
+  "name": "@mockmask/accounts-controller",
   "version": "17.2.0",
   "description": "Manages internal accounts",
   "keywords": [
-    "MetaMask",
+    "MockMask",
     "Ethereum"
   ],
   "homepage": "https://github.com/MetaMask/core/tree/main/packages/accounts-controller#readme",

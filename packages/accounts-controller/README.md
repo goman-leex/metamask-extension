@@ -1,14 +1,14 @@
-# `@metamask/accounts-controller`
+# `@mockmask/accounts-controller`
 
 Manages internal accounts used in place of regular ethereum addresses.
 
 ## Installation
 
-`yarn add @metamask/accounts-controller`
+`yarn add @mockmask/accounts-controller`
 
 or
 
-`npm install @metamask/accounts-controller`
+`npm install @mockmask/accounts-controller`
 
 ## Contributing
 

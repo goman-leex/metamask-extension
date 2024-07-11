@@ -39,6 +39,8 @@ export function keyringTypeToName(keyringType: string): string {
     case KeyringTypes.snap: {
       return 'Snap Account';
     }
+    case 'Mock Keyring':
+      return 'Mock Account';
     default: {
       throw new Error(`Unknown keyring ${keyringType}`);
     }
